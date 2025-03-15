@@ -85,17 +85,18 @@ const Login = () => {
           src="https://assets.nflxext.com/ffe/siteui/vlv3/50fcc930-ba3f-4cae-9257-9f920e30a998/web/IN-en-20250310-TRIFECTA-perspective_739387a0-ff14-44ed-a5af-36e5aa4d236e_large.jpg"
           alt="Netflix Background"
         />
+        <div className="absolute inset-0 bg-black bg-opacity-50"></div>
       </div>
 
-      <div className="relative z-10 flex items-center justify-center min-h-screen">
+      <div className="relative z-10 flex items-center justify-center min-h-screen py-10 px-4">
         <form
-          className="p-12 bg-black bg-opacity-70 rounded-lg shadow-2xl w-full max-w-md mx-4 backdrop-blur-sm"
+          className="p-8 md:p-12 bg-black bg-opacity-70 rounded-lg shadow-2xl w-full max-w-md mx-auto backdrop-blur-sm"
           onSubmit={(e) => {
             e.preventDefault();
             handleButtonClick();
           }}
         >
-          <h1 className="font-bold text-3xl text-white mb-8">
+          <h1 className="font-bold text-2xl md:text-3xl text-white mb-6 md:mb-8">
             {isSignInForm ? "Sign In" : "Sign Up"}
           </h1>
 
@@ -104,7 +105,7 @@ const Login = () => {
               ref={username}
               type="text"
               placeholder="Username"
-              className="p-4 mb-4 w-full  bg-gray-800 bg-opacity-80 text-white rounded-md border border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-600"
+              className="p-3 md:p-4 mb-4 w-full bg-gray-800 bg-opacity-90 text-white rounded-md border border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-600"
             />
           )}
 
@@ -112,38 +113,38 @@ const Login = () => {
             ref={email}
             type="text"
             placeholder="Email Address"
-            className="p-4 mb-4 w-full bg-gray-800 bg-opacity-80 text-white rounded-md border border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-600"
+            className="p-3 md:p-4 mb-4 w-full bg-gray-800 bg-opacity-90 text-white rounded-md border border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-600"
           />
 
           <input
             ref={password}
             type="password"
             placeholder="Password"
-            className="p-4 mb-4 w-full bg-gray-800 bg-opacity-80 text-white rounded-md border border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-600"
+            className="p-3 md:p-4 mb-4 w-full bg-gray-800 bg-opacity-90 text-white rounded-md border border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-600"
           />
 
           {!isSignInForm && (
             <input
               type="password"
               placeholder="Confirm Password"
-              className="p-4 mb-6 w-full bg-gray-800 bg-opacity-80 text-white rounded-md border border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-600"
+              className="p-3 md:p-4 mb-6 w-full bg-gray-800 bg-opacity-90 text-white rounded-md border border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-600"
             />
           )}
 
           {errorMessage && (
-            <p className="text-red-500 text-sm mt-2 font-bold">
+            <p className="text-red-500 text-sm mt-2 font-bold mb-4">
               {errorMessage}
             </p>
           )}
 
           <button
             type="submit"
-            className="p-4 my-4 bg-red-600 hover:bg-red-700 text-white w-full rounded-md font-bold transition-colors duration-200 shadow-lg"
+            className="p-3 md:p-4 my-4 bg-red-600 hover:bg-red-700 text-white w-full rounded-md font-bold transition-colors duration-200 shadow-lg"
           >
             {isSignInForm ? "Sign In" : "Sign Up"}
           </button>
 
-          <div className="flex justify-between items-center mt-4 text-gray-300 text-sm">
+          <div className="flex justify-between items-center mt-4 text-gray-300 text-xs md:text-sm">
             <div className="flex items-center">
               <input type="checkbox" id="remember" className="mr-1" />
               <label htmlFor="remember">Remember me</label>
@@ -151,11 +152,11 @@ const Login = () => {
             <span className="cursor-pointer hover:underline">Need help?</span>
           </div>
 
-          <div className="mt-12 text-gray-300">
+          <div className="mt-8 md:mt-12 text-gray-300 text-sm">
             <p>
               {isSignInForm ? "New to Netflix? " : "Already a user? "}
               <span
-                className="text-white hover:underline cursor-pointer"
+                className="text-white hover:underline cursor-pointer font-semibold"
                 onClick={toggleSignInForm}
               >
                 {isSignInForm ? "Sign Up" : "Sign In"}

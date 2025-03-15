@@ -15,7 +15,6 @@ const Body = () => {
       path: "/",
       element: <Login />,
     },
-
     {
       path: "/browse",
       element: <Browse />,
@@ -23,7 +22,7 @@ const Body = () => {
   ]);
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const { uid, email, displayName } = user;
         dispatch(addUser({ uid, email, displayName }));
@@ -31,7 +30,9 @@ const Body = () => {
         dispatch(removeUser());
       }
     });
-  }, []);
+    return unsubscribe;
+  }, [dispatch]);
+
   return (
     <div>
       <RouterProvider router={appRouter} />
