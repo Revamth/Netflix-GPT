@@ -51,16 +51,14 @@ const Login = () => {
             {isSignInForm ? "Sign In" : "Sign Up"}
           </h1>
 
-          <div className="flex space-x-4">
-            {!isSignInForm && (
-              <input
-                ref={username}
-                type="text"
-                placeholder="Username"
-                className="p-4 mb-4 w-full sm:w-1/2 bg-gray-800 bg-opacity-80 text-white rounded-md border border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-600"
-              />
-            )}
-          </div>
+          {!isSignInForm && (
+            <input
+              ref={username}
+              type="text"
+              placeholder="Username"
+              className="p-4 mb-4 w-full sm:w-1/2 bg-gray-800 bg-opacity-80 text-white rounded-md border border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-600"
+            />
+          )}
 
           <input
             ref={email}
