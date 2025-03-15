@@ -1,23 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { onAuthStateChanged } from "firebase/auth";
+import { addUser, removeUser } from "../utils/userSlice";
+import { useDispatch } from "react-redux";
 
 const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const user = useSelector((state) => state.user);
   const [showMenu, setShowMenu] = useState(false);
 
   const handleSignOut = () => {
     signOut(auth)
-      .then(() => {
-        navigate("/");
-      })
+      .then(() => {})
       .catch((error) => {
         navigate("/error");
       });
   };
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const { uid, email, displayName } = user;
+        dispatch(addUser({ uid, email, displayName }));
+        navigate("/browse");
+      } else {
+        dispatch(removeUser());
+        navigate("/");
+      }
+    });
+    return unsubscribe;
+  }, [dispatch]);
 
   return (
     <div className="fixed top-0 left-0 right-0 px-4 md:px-8 py-3 bg-gradient-to-b from-black to-transparent z-10 w-full">
