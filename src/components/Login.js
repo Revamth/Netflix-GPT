@@ -9,6 +9,7 @@ import {
 import { auth } from "../utils/firebase";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { NETFLIX_BACKGROUND } from "../utils/constants";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -78,7 +79,7 @@ const Login = () => {
       <div className="absolute inset-0 w-full">
         <img
           className="w-full h-full object-cover"
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/50fcc930-ba3f-4cae-9257-9f920e30a998/web/IN-en-20250310-TRIFECTA-perspective_739387a0-ff14-44ed-a5af-36e5aa4d236e_large.jpg"
+          src={NETFLIX_BACKGROUND}
           alt="Netflix Background"
         />
         <div className="absolute inset-0 bg-black bg-opacity-50"></div>

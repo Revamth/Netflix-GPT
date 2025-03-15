@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { onAuthStateChanged } from "firebase/auth";
 import { addUser, removeUser } from "../utils/userSlice";
 import { useDispatch } from "react-redux";
+import { NETFLIX_LOGO, USER_IMG } from "../utils/constants";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -33,17 +34,13 @@ const Header = () => {
         navigate("/");
       }
     });
-    return unsubscribe;
+    return () => unsubscribe();
   }, [dispatch]);
 
   return (
     <div className="fixed top-0 left-0 right-0 px-4 md:px-8 py-3 bg-gradient-to-b from-black to-transparent z-10 w-full">
       <div className="flex justify-between items-center">
-        <img
-          src="https://help.nflxext.com/helpcenter/OneTrust/oneTrust_production/consent/87b6a5c0-0104-4e96-a291-092c11350111/01938dc4-59b3-7bbc-b635-c4131030e85f/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png"
-          alt="Netflix Logo"
-          className="w-24 md:w-32"
-        />
+        <img src={NETFLIX_LOGO} alt="Netflix Logo" className="w-24 md:w-32" />
 
         {user && (
           <div className="relative">
@@ -52,7 +49,7 @@ const Header = () => {
               onClick={() => setShowMenu(!showMenu)}
             >
               <img
-                src="https://occ-0-4078-2164.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABbwdSFv3QFDRDc0BknR3lQSOf7GFR9V54jw7TWVBwmyoYbTSbFRAi95ZEYeYPr1_7ZBXM4aGr0gv0r4HY4Ma2IEmL9bsUWE.png?r=a16"
+                src={USER_IMG}
                 alt="User"
                 className="w-8 h-8 md:w-10 md:h-10 rounded"
               />
