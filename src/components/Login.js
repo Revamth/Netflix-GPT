@@ -1,13 +1,32 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import Header from "./Header";
-import { useState } from "react";
+import { checkValidity } from "../utils/validate";
 
 const Login = () => {
   const [isSignInForm, setSignInForm] = useState(true);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const toggleSignInForm = () => {
     setSignInForm(!isSignInForm);
   };
+
+  const username = useRef(null);
+  const email = useRef(null);
+  const password = useRef(null);
+
+  const handleButtonClick = () => {
+    const emailValue = email.current ? email.current.value : "";
+    const passwordValue = password.current ? password.current.value : "";
+    const usernameValue = username.current ? username.current.value : "";
+
+    const message = checkValidity(
+      emailValue,
+      passwordValue,
+      isSignInForm ? null : usernameValue
+    );
+    setErrorMessage(message);
+  };
+
   return (
     <div className="min-h-screen relative">
       <Header />
@@ -21,34 +40,37 @@ const Login = () => {
       </div>
 
       <div className="relative z-10 flex items-center justify-center min-h-screen">
-        <form className="p-12 bg-black bg-opacity-70 rounded-lg shadow-2xl w-full max-w-md mx-4 backdrop-blur-sm">
+        <form
+          className="p-12 bg-black bg-opacity-70 rounded-lg shadow-2xl w-full max-w-md mx-4 backdrop-blur-sm"
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleButtonClick();
+          }}
+        >
           <h1 className="font-bold text-3xl text-white mb-8">
             {isSignInForm ? "Sign In" : "Sign Up"}
           </h1>
+
           <div className="flex space-x-4">
             {!isSignInForm && (
               <input
+                ref={username}
                 type="text"
-                placeholder="First Name"
-                className="p-4 mb-4 w-full sm:w-1/2 bg-gray-800 bg-opacity-80 text-white rounded-md border border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-600 relative"
-              />
-            )}
-            {!isSignInForm && (
-              <input
-                type="text"
-                placeholder="Last Name"
-                className="p-4 mb-4 w-full sm:w-1/2 bg-gray-800 bg-opacity-80 text-white rounded-md border border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-600 relative"
+                placeholder="Username"
+                className="p-4 mb-4 w-full sm:w-1/2 bg-gray-800 bg-opacity-80 text-white rounded-md border border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-600"
               />
             )}
           </div>
 
           <input
+            ref={email}
             type="text"
             placeholder="Email Address"
             className="p-4 mb-4 w-full bg-gray-800 bg-opacity-80 text-white rounded-md border border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-600"
           />
 
           <input
+            ref={password}
             type="password"
             placeholder="Password"
             className="p-4 mb-4 w-full bg-gray-800 bg-opacity-80 text-white rounded-md border border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-600"
@@ -57,12 +79,21 @@ const Login = () => {
           {!isSignInForm && (
             <input
               type="password"
-              placeholder="ConfirmPassword"
+              placeholder="Confirm Password"
               className="p-4 mb-6 w-full bg-gray-800 bg-opacity-80 text-white rounded-md border border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-600"
             />
           )}
 
-          <button className="p-4 bg-red-600 hover:bg-red-700 text-white w-full rounded-md font-bold transition-colors duration-200 shadow-lg">
+          {errorMessage && (
+            <p className="text-red-500 text-sm mt-2 font-bold">
+              {errorMessage}
+            </p>
+          )}
+
+          <button
+            type="submit"
+            className="p-4 my-4 bg-red-600 hover:bg-red-700 text-white w-full rounded-md font-bold transition-colors duration-200 shadow-lg"
+          >
             {isSignInForm ? "Sign In" : "Sign Up"}
           </button>
 
@@ -77,7 +108,6 @@ const Login = () => {
           <div className="mt-12 text-gray-300">
             <p>
               {isSignInForm ? "New to Netflix? " : "Already a user? "}
-
               <span
                 className="text-white hover:underline cursor-pointer"
                 onClick={toggleSignInForm}
