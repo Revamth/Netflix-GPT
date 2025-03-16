@@ -18,6 +18,7 @@ const Login = () => {
   const username = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
+  const confirmPassword = useRef(null);
 
   const toggleSignInForm = () => setSignInForm(!isSignInForm);
 
@@ -69,12 +70,12 @@ const Login = () => {
           src={NETFLIX_BACKGROUND}
           alt="Netflix Background"
         />
-        <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+        <div className="absolute inset-0 bg-black bg-opacity-60"></div>
       </div>
 
       <div className="relative z-10 flex items-center justify-center min-h-screen py-10 px-4">
         <form
-          className="p-8 bg-black bg-opacity-70 rounded-lg shadow-2xl w-full max-w-md"
+          className="p-8 md:p-16 bg-black bg-opacity-80 rounded-md shadow-2xl w-full max-w-md"
           onSubmit={(e) => {
             e.preventDefault();
             handleButtonClick();
@@ -89,26 +90,27 @@ const Login = () => {
               ref={username}
               type="text"
               placeholder="Username"
-              className="p-4 mb-4 w-full bg-gray-800 text-white rounded-md border border-gray-700"
+              className="p-4 mb-4 w-full bg-gray-800 text-white rounded-md border border-gray-700 focus:outline-none focus:border-red-500 transition-colors duration-300"
             />
           )}
           <input
             ref={email}
             type="text"
             placeholder="Email Address"
-            className="p-4 mb-4 w-full bg-gray-800 text-white rounded-md border border-gray-700"
+            className="p-4 mb-4 w-full bg-gray-800 text-white rounded-md border border-gray-700 focus:outline-none focus:border-red-500 transition-colors duration-300"
           />
           <input
             ref={password}
             type="password"
             placeholder="Password"
-            className="p-4 mb-4 w-full bg-gray-800 text-white rounded-md border border-gray-700"
+            className="p-4 mb-4 w-full bg-gray-800 text-white rounded-md border border-gray-700 focus:outline-none focus:border-red-500 transition-colors duration-300"
           />
           {!isSignInForm && (
             <input
+              ref={confirmPassword}
               type="password"
               placeholder="Confirm Password"
-              className="p-4 mb-6 w-full bg-gray-800 text-white rounded-md border border-gray-700"
+              className="p-4 mb-6 w-full bg-gray-800 text-white rounded-md border border-gray-700 focus:outline-none focus:border-red-500 transition-colors duration-300"
             />
           )}
 
@@ -120,12 +122,12 @@ const Login = () => {
 
           <button
             type="submit"
-            className="p-4 my-4 bg-red-600 hover:bg-red-700 text-white w-full rounded-md font-bold transition-colors duration-200"
+            className="p-4 my-4 bg-red-600 hover:bg-red-700 text-white w-full rounded-md font-bold transition-colors duration-300"
           >
             {isSignInForm ? "Sign In" : "Sign Up"}
           </button>
 
-          <div className="mt-8 text-gray-300 text-sm">
+          <div className="mt-8 text-gray-400 text-sm">
             <p>
               {isSignInForm ? "New to Netflix? " : "Already a user? "}
               <span
