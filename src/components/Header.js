@@ -11,24 +11,10 @@ const Header = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const [showMenu, setShowMenu] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
 
   const handleSignOut = () => {
     signOut(auth).catch(() => navigate("/error"));
   };
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -47,16 +33,10 @@ const Header = () => {
       }
     });
     return () => unsubscribe();
-  }, []);
+  }, [dispatch]);
 
   return (
-    <div
-      className={`fixed top-0 left-0 right-0 z-50 px-4 py-2 transition-all duration-500 ${
-        isScrolled
-          ? "bg-black"
-          : "bg-gradient-to-b from-black via-black-opacity-80 to-transparent"
-      }`}
-    >
+    <div className="fixed top-0 left-0 right-0 px-4 py-3 bg-gradient-to-b from-black to-transparent z-50">
       <div className="flex justify-between items-center">
         <img src={NETFLIX_LOGO} alt="Netflix Logo" className="w-24 md:w-32" />
         {user && (
@@ -65,12 +45,13 @@ const Header = () => {
               className="flex items-center gap-2 cursor-pointer"
               onClick={() => setShowMenu(!showMenu)}
             >
-              <img src={USER_IMG} alt="User" className="w-8 h-8 rounded" />
+              <img src={USER_IMG} alt="User" className="w-10 h-10 rounded" />
+              <span className="hidden md:inline text-sm text-white">
+                {user.displayName}
+              </span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className={`h-4 w-4 text-white transition-transform duration-300 ${
-                  showMenu ? "rotate-180" : ""
-                }`}
+                className="h-4 w-4 text-white"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -84,13 +65,13 @@ const Header = () => {
               </svg>
             </div>
             {showMenu && (
-              <div className="absolute right-0 mt-2 w-48 bg-black bg-opacity-90 border border-gray-800 rounded shadow-lg overflow-hidden">
+              <div className="absolute right-0 mt-2 w-48 bg-black bg-opacity-90 border border-gray-800 rounded-md shadow-lg">
                 <div className="py-1">
                   <div className="px-4 py-2 text-sm text-gray-300 border-b border-gray-800">
                     {user.email}
                   </div>
                   <button
-                    className="w-full text-left px-4 py-2 text-sm text-white hover:bg-red-600 transition-colors duration-300"
+                    className="w-full text-left px-4 py-2 text-sm text-white hover:bg-red-600"
                     onClick={handleSignOut}
                   >
                     Sign Out
