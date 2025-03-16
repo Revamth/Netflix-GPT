@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { TMDB_IMG } from "../utils/constants";
 
 const MovieCard = ({ poster_path }) => {
