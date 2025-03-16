@@ -6,3 +6,14 @@ export const USER_IMG =
 
 export const NETFLIX_BACKGROUND =
   "https://assets.nflxext.com/ffe/siteui/vlv3/50fcc930-ba3f-4cae-9257-9f920e30a998/web/IN-en-20250310-TRIFECTA-perspective_739387a0-ff14-44ed-a5af-36e5aa4d236e_large.jpg";
+
+export const API_CONSTANTS = {
+  method: "GET",
+  headers: {
+    accept: "application/json",
+    Authorization:
+      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwZDgzOTViNDhlMjMwYzVmNGQwNzMzNzMyOTY5NzA1YyIsIm5iZiI6MTc0MjA1ODI3MC41MzcsInN1YiI6IjY3ZDViMzFlNDExZjkwZmVjZGYxNmI1MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.b5uvk5spkoT2TKGwkLaLylqxEjSWlZ1KGP_qKqiAyXY",
+  },
+};
+
+export const TMDB_IMG = "https://image.tmdb.org/t/p/original";
