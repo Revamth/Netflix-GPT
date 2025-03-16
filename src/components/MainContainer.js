@@ -3,7 +3,7 @@ import VideoTitle from "./VideoTitle";
 import VideoBackground from "./VideoBackground";
 
 const MainContainer = () => {
-  const movies = useSelector((state) => state.movies?.nowPlayingMovies);
+  const movies = useSelector((state) => state.movies?.trendingMovies);
   if (!movies) return null;
 
   const { original_title, overview, id } = movies[0];

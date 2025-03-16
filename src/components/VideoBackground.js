@@ -17,7 +17,7 @@ const VideoBackground = ({ movieId }) => {
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowFullScreen
         style={{
-          filter: "brightness(1.8)",
+          filter: "brightness(2)",
         }}
       ></iframe>
     </div>
