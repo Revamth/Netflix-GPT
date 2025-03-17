@@ -17,3 +17,5 @@ export const API_OPTIONS = {
 };
 
 export const TMDB_IMG = "https://image.tmdb.org/t/p/original";
+
+export const GEMINI_KEY = "";

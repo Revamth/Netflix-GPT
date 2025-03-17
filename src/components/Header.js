@@ -5,16 +5,31 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
 import { NETFLIX_LOGO, USER_IMG } from "../utils/constants";
-import { toggleGptSearch } from "../utils/gptSlice";
+import { toggleGptSearchView, removeGptResponse } from "../utils/gptSlice";
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  const isGpt = useSelector((state) => state.gptSlice.showGptSearch);
   const [showMenu, setShowMenu] = useState(false);
-  const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
-  const handleSignOut = () => {
-    signOut(auth).catch(() => navigate("/error"));
+
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      dispatch(removeUser());
+      navigate("/");
+    } catch (error) {
+      alert(`Sign-out failed: ${error.message}`);
+    }
+  };
+
+  const gptSearchHandler = () => {
+    if (isGpt) {
+      navigate("/browse");
+      dispatch(removeGptResponse());
+    }
+    dispatch(toggleGptSearchView());
   };
 
   useEffect(() => {
@@ -34,10 +49,8 @@ const Header = () => {
       }
     });
     return () => unsubscribe();
-  }, [dispatch]);
-  const handleGPTSearch = () => {
-    dispatch(toggleGptSearch());
-  };
+  }, [dispatch, navigate]);
+
   return (
     <div className="fixed top-0 left-0 right-0 px-4 py-3 bg-gradient-to-b from-black to-transparent z-50">
       <div className="flex justify-between items-center">
@@ -47,9 +60,9 @@ const Header = () => {
             <div className="flex items-center gap-4">
               <button
                 className="bg-white hover:bg-opacity-80 text-black px-4 py-2 rounded font-semibold flex items-center justify-center transition-all duration-200"
-                onClick={handleGPTSearch}
+                onClick={gptSearchHandler}
               >
-                {showGptSearch ? "Home Page" : "Show GPT Search"}
+                {isGpt ? "Home Page" : "Show GPT Search"}
               </button>
 
               <div
