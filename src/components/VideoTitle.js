@@ -3,7 +3,7 @@ const VideoTitle = ({ title, overview }) => {
     overview?.length > 200 ? overview.slice(0, 200) + "..." : overview;
 
   return (
-    <div className="absolute bottom-[130px] left-0 w-full px-6 md:px-12 py-10 bg-gradient-to-t from-black to-transparent">
+    <div className="absolute bottom-[140px] left-0 w-full px-6 md:px-12 py-10 bg-gradient-to-t from-black to-transparent">
       <div className="max-w-xl mb-24 md:mb-40">
         <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
           {title}
