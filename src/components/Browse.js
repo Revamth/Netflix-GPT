@@ -8,6 +8,7 @@ import MainContainer from "./MainContainer";
 import SecondaryContainer from "./SecondaryContainer";
 import usePopularTVSeries from "../hooks/usePopularTVSeries";
 import useTopRatedTVSeries from "../hooks/useTopRatedTVSeries";
+import GPTSearch from "./GPTSearch";
 
 const Browse = () => {
   useNowPlayingMovies();
@@ -21,6 +22,7 @@ const Browse = () => {
   return (
     <div className="bg-black min-h-screen">
       <Header />
+      <GPTSearch />
       <MainContainer />
       <SecondaryContainer />
     </div>
