@@ -9,7 +9,6 @@ const MainContainer = () => {
 
   const mainMovie = movies[0];
   const { original_title, overview, backdrop_path } = mainMovie;
-  console.log(mainMovie);
 
   const backdropUrl = TMDB_IMG + backdrop_path;
 

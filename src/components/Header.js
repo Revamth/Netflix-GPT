@@ -5,13 +5,14 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
 import { NETFLIX_LOGO, USER_IMG } from "../utils/constants";
+import { toggleGptSearch } from "../utils/gptSlice";
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const [showMenu, setShowMenu] = useState(false);
-
+  const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
   const handleSignOut = () => {
     signOut(auth).catch(() => navigate("/error"));
   };
@@ -34,7 +35,9 @@ const Header = () => {
     });
     return () => unsubscribe();
   }, [dispatch]);
-  const handleGPTSearch = () => {};
+  const handleGPTSearch = () => {
+    dispatch(toggleGptSearch());
+  };
   return (
     <div className="fixed top-0 left-0 right-0 px-4 py-3 bg-gradient-to-b from-black to-transparent z-50">
       <div className="flex justify-between items-center">
@@ -46,10 +49,9 @@ const Header = () => {
                 className="bg-white hover:bg-opacity-80 text-black px-4 py-2 rounded font-semibold flex items-center justify-center transition-all duration-200"
                 onClick={handleGPTSearch}
               >
-                GPT Search
+                {showGptSearch ? "Home Page" : "Show GPT Search"}
               </button>
 
-              {/* User Info */}
               <div
                 className="flex items-center gap-2 cursor-pointer"
                 onClick={() => setShowMenu(!showMenu)}

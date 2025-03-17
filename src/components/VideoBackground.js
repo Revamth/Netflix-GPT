@@ -3,10 +3,10 @@ const VideoBackground = ({ backdropUrl }) => {
 
   return (
     <div
-      className="w-full min-h-screen bg-cover bg-center"
+      className="w-full min-h-screen bg-cover bg-center top-0 left-0"
       style={{
         backgroundImage: `url(${backdropUrl})`,
-        filter: "brightness(0.9)", // Darken the background a bit (adjust as needed)
+        filter: "brightness(0.9)",
       }}
     ></div>
   );
