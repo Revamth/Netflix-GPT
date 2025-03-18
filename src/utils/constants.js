@@ -8,13 +8,11 @@ export const API_OPTIONS = {
   method: "GET",
   headers: {
     accept: "application/json",
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwZDgzOTViNDhlMjMwYzVmNGQwNzMzNzMyOTY5NzA1YyIsIm5iZiI6MTc0MjA1ODI3MC41MzcsInN1YiI6IjY3ZDViMzFlNDExZjkwZmVjZGYxNmI1MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.b5uvk5spkoT2TKGwkLaLylqxEjSWlZ1KGP_qKqiAyXY",
+    Authorization: `Bearer ${process.env.REACT_APP_TMDB_TOKEN}`,
   },
 };
-export const BASE_URL = "https://api.themoviedb.org/3/movie/";
-export const TMDB_IMG = "https://image.tmdb.org/t/p/original";
 
-export const GEMINI_KEY = "";
-
-export const API_KEY = "";
+export const BASE_URL = process.env.REACT_APP_BASE_URL;
+export const TMDB_IMG = process.env.REACT_APP_TMDB_IMG_URL;
+export const GEMINI_KEY = process.env.REACT_APP_GEMINI_KEY;
+export const API_KEY = process.env.REACT_APP_TMDB_KEY;
