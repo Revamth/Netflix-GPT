@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { API_OPTIONS } from "../utils/constants";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { useDispatch } from "react-redux";
@@ -11,7 +11,7 @@ const useGptSearch = () => {
 
   const genAI = new GoogleGenerativeAI(GEMINI_KEY);
 
-  const searchMovieTMDB = async (movie) => {
+  const searchMovieTMDB = useCallback(async (movie) => {
     try {
       const response = await fetch(
         `https://api.themoviedb.org/3/search/movie?query=${movie}&include_adult=false&language=en-US&page=1`,
@@ -28,7 +28,7 @@ const useGptSearch = () => {
       console.error(`Error fetching movie "${movie}":`, error);
       return [];
     }
-  };
+  }, []);
 
   const getResponseForGivenPrompt = async (e) => {
     e.preventDefault();

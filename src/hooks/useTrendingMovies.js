@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import axios from "axios";
 import { API_OPTIONS } from "../utils/constants";
 import { useDispatch } from "react-redux";
@@ -6,7 +6,7 @@ import { addTrendingMovies } from "../utils/movieSlice";
 
 const useTrendingMovies = () => {
   const dispatch = useDispatch();
-  const TrendingMovies = async () => {
+  const TrendingMovies = useCallback(async () => {
     try {
       const response = await axios.get(
         "https://api.themoviedb.org/3/trending/movie/day?",
@@ -16,11 +16,11 @@ const useTrendingMovies = () => {
     } catch (err) {
       console.error(err);
     }
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     TrendingMovies();
-  }, []);
+  }, [TrendingMovies]);
 };
 
 export default useTrendingMovies;

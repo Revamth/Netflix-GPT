@@ -1,14 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addTrailerVideo } from "../utils/movieSlice";
-
 import { BASE_URL, API_KEY } from "../utils/constants";
 
 const useMovieTrailer = (movieId) => {
   const dispatch = useDispatch();
   const trailerVideo = useSelector((store) => store.movies.trailerVideo);
 
-  const getMovieVideos = async () => {
+  const getMovieVideos = useCallback(async () => {
     try {
       const res = await fetch(
         `${BASE_URL}${movieId}/videos?api_key=${API_KEY}&language=en-US`
@@ -31,11 +30,11 @@ const useMovieTrailer = (movieId) => {
     } catch (error) {
       console.error("Error fetching movie videos:", error);
     }
-  };
+  }, [dispatch, movieId]);
 
   useEffect(() => {
     if (!trailerVideo && movieId) getMovieVideos();
-  }, [movieId, trailerVideo]);
+  }, [movieId, trailerVideo, getMovieVideos]);
 };
 
 export default useMovieTrailer;
