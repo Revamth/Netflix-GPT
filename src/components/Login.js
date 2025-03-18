@@ -26,6 +26,12 @@ const Login = () => {
     const emailValue = email.current?.value || "";
     const passwordValue = password.current?.value || "";
     const usernameValue = username.current?.value || "";
+    const confirmPasswordValue = confirmPassword.current?.value || "";
+
+    if (!isSignInForm && passwordValue !== confirmPasswordValue) {
+      setErrorMessage("Passwords do not match");
+      return;
+    }
 
     const message = checkValidity(
       emailValue,

@@ -4,7 +4,7 @@ import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
-import { NETFLIX_LOGO, USER_IMG } from "../utils/constants";
+import { NETFLIX_LOGO } from "../utils/constants";
 import { toggleGptSearchView, removeGptResponse } from "../utils/gptSlice";
 
 const Header = () => {
@@ -13,6 +13,12 @@ const Header = () => {
   const user = useSelector((state) => state.user);
   const isGpt = useSelector((state) => state.gptSlice.showGptSearch);
   const [showMenu, setShowMenu] = useState(false);
+
+  const userImg = user?.email
+    ? `https://api.dicebear.com/7.x/fun-emoji/svg?seed=${encodeURIComponent(
+        user.email
+      )}`
+    : `https://api.dicebear.com/7.x/fun-emoji/svg?seed=Guest`;
 
   const handleSignOut = async () => {
     try {
@@ -39,7 +45,6 @@ const Header = () => {
           addUser({
             uid: user.uid,
             email: user.email,
-            displayName: user.displayName,
           })
         );
         navigate("/browse");
@@ -69,10 +74,7 @@ const Header = () => {
                 className="flex items-center gap-2 cursor-pointer"
                 onClick={() => setShowMenu(!showMenu)}
               >
-                <img src={USER_IMG} alt="User" className="w-10 h-10 rounded" />
-                <span className="hidden md:inline text-sm text-white">
-                  {user.displayName}
-                </span>
+                <img src={userImg} alt="User" className="w-10 h-10 rounded" />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-4 w-4 text-white"

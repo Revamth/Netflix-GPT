@@ -5,8 +5,6 @@ const VideoBackground = ({ id }) => {
   const trailerVideo = useSelector((state) => state.movies?.trailerVideo);
   useMovieTrailer(id);
 
-  console.log("Trailer Video:", trailerVideo);
-
   if (!trailerVideo || !trailerVideo.key) return null;
 
   return (
