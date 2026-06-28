@@ -8,7 +8,12 @@
 // provider, only AI_BASE_URL / AI_MODEL / the env key below need to change.
 //
 // Request:  POST /api/ai-search  { "query": "feel-good sci-fi" }
-// Response: { "movies": ["Interstellar", "The Martian", ...] }
+// Response: { "movies": [{ "title": "Interstellar", "year": 2014,
+//                          "reason": "Cerebral space epic." }, ...] }
+//
+// Returns structured JSON (title + year + reason) instead of bare names so the
+// client can match TMDB by title AND year (far fewer wrong-movie matches) and
+// show why each film was picked.
 
 const AI_BASE_URL = "https://api.groq.com/openai/v1/chat/completions";
 const AI_MODEL = process.env.GROQ_MODEL || "llama-3.3-70b-versatile";
@@ -32,7 +37,7 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: "AI API key not configured" });
   }
 
-  const prompt = `Act as a Movie Recommendation system and suggest some movies for the query: "${query}". Only give me names of 5 movies, comma-separated like this example: Gadar, Sholay, Don, Golmaal, Koi Mil Gaya.`;
+  const prompt = `You are a movie recommendation engine. For the query: "${query}", suggest exactly 5 real movies. Respond with ONLY a JSON object of this shape, no extra text: {"movies":[{"title":"<exact movie title>","year":<release year number>,"reason":"<one short sentence why it fits>"}]}`;
 
   try {
     const aiRes = await fetch(AI_BASE_URL, {
@@ -45,6 +50,8 @@ export default async function handler(req, res) {
         model: AI_MODEL,
         messages: [{ role: "user", content: prompt }],
         temperature: 0.7,
+        // Force valid JSON output (Groq/OpenAI-compatible JSON mode).
+        response_format: { type: "json_object" },
       }),
     });
 
@@ -57,11 +64,26 @@ export default async function handler(req, res) {
       });
     }
 
-    const text = data?.choices?.[0]?.message?.content || "";
-    const movies = text
-      .split(",")
-      .map((m) => m.trim())
-      .filter(Boolean);
+    const text = data?.choices?.[0]?.message?.content || "{}";
+
+    let movies = [];
+    try {
+      const parsed = JSON.parse(text);
+      movies = Array.isArray(parsed.movies) ? parsed.movies : [];
+    } catch {
+      return res
+        .status(502)
+        .json({ error: "AI returned malformed JSON" });
+    }
+
+    // Keep only valid entries with a title.
+    movies = movies
+      .filter((m) => m && m.title)
+      .map((m) => ({
+        title: String(m.title).trim(),
+        year: m.year ? String(m.year).slice(0, 4) : null,
+        reason: m.reason ? String(m.reason).trim() : null,
+      }));
 
     res.setHeader("cache-control", "no-store");
     return res.status(200).json({ movies });
