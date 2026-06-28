@@ -1,14 +1,11 @@
-import { useState, useEffect } from "react";
-import { signOut, onAuthStateChanged } from "firebase/auth";
+import { useState } from "react";
+import { signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { addUser, removeUser } from "../utils/userSlice";
 import { NETFLIX_LOGO } from "../utils/constants";
 import { toggleGptSearchView, removeGptResponse } from "../utils/gptSlice";
 
 const Header = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const isGpt = useSelector((state) => state.gptSlice.showGptSearch);
@@ -22,39 +19,20 @@ const Header = () => {
 
   const handleSignOut = async () => {
     try {
+      // AppLayout's auth listener clears the user and redirects on sign-out.
       await signOut(auth);
-      dispatch(removeUser());
-      navigate("/");
     } catch (error) {
       alert(`Sign-out failed: ${error.message}`);
     }
   };
 
   const gptSearchHandler = () => {
+    // Toggle between the GPT view and the normal Browse view (same route).
     if (isGpt) {
-      navigate("/browse");
       dispatch(removeGptResponse());
     }
     dispatch(toggleGptSearchView());
   };
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        dispatch(
-          addUser({
-            uid: user.uid,
-            email: user.email,
-          })
-        );
-        navigate("/browse");
-      } else {
-        dispatch(removeUser());
-        navigate("/");
-      }
-    });
-    return () => unsubscribe();
-  }, [dispatch, navigate]);
 
   return (
     <div className="fixed top-0 left-0 right-0 px-4 py-3 bg-gradient-to-b from-black to-transparent z-50">

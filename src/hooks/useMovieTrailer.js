@@ -1,11 +1,10 @@
 import { useEffect, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addTrailerVideo } from "../utils/movieSlice";
 import { API_OPTIONS, buildTmdbUrl } from "../utils/constants";
 
 const useMovieTrailer = (movieId) => {
   const dispatch = useDispatch();
-  const trailerVideo = useSelector((store) => store.movies.trailerVideo);
 
   const getMovieVideos = useCallback(async () => {
     try {
@@ -38,9 +37,11 @@ const useMovieTrailer = (movieId) => {
     }
   }, [dispatch, movieId]);
 
+  // Refetch whenever the movieId changes (previously gated on a cached trailer,
+  // which froze the hero to the first trailer ever fetched).
   useEffect(() => {
-    if (!trailerVideo && movieId) getMovieVideos();
-  }, [movieId, trailerVideo, getMovieVideos]);
+    if (movieId) getMovieVideos();
+  }, [movieId, getMovieVideos]);
 };
 
 export default useMovieTrailer;
