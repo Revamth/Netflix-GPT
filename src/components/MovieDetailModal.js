@@ -10,6 +10,8 @@ const MovieDetailModal = () => {
   const dispatch = useDispatch();
   const movie = useSelector((state) => state.movies.selectedMovie);
   const [trailerKey, setTrailerKey] = useState(null);
+  // Trailer plays only after the user clicks "Play Trailer" — no autoplay.
+  const [showTrailer, setShowTrailer] = useState(false);
 
   const closeModal = useCallback(() => {
     dispatch(setSelectedMovie(null));
@@ -24,6 +26,7 @@ const MovieDetailModal = () => {
     if (!movie?.id) return;
     let active = true;
     setTrailerKey(null);
+    setShowTrailer(false); // reset to poster view for each newly opened movie
 
     (async () => {
       try {
@@ -87,24 +90,41 @@ const MovieDetailModal = () => {
           ✕
         </button>
 
-        {/* Trailer if available, otherwise the backdrop/poster image. */}
-        <div className="w-full aspect-video bg-black">
-          {trailerKey ? (
+        {/* Poster by default; trailer plays only after the user opts in. */}
+        <div className="relative w-full aspect-video bg-black">
+          {showTrailer && trailerKey ? (
             <iframe
               className="w-full h-full"
-              src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1&mute=1&rel=0`}
+              src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1&rel=0`}
               title={`${title} trailer`}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             />
           ) : (
-            (movie.backdrop_path || movie.poster_path) && (
-              <img
-                className="w-full h-full object-cover"
-                src={TMDB_IMG + (movie.backdrop_path || movie.poster_path)}
-                alt={title}
-              />
-            )
+            <>
+              {(movie.backdrop_path || movie.poster_path) && (
+                <img
+                  className="w-full h-full object-cover"
+                  src={TMDB_IMG + (movie.backdrop_path || movie.poster_path)}
+                  alt={title}
+                />
+              )}
+              {/* Play Trailer button overlay — only when a trailer exists. */}
+              {trailerKey && (
+                <button
+                  onClick={() => setShowTrailer(true)}
+                  className="absolute inset-0 flex items-center justify-center bg-black/30 hover:bg-black/40 transition-colors"
+                  aria-label="Play trailer"
+                >
+                  <span className="flex items-center gap-2 bg-white/90 hover:bg-white text-black px-6 py-3 rounded-full font-semibold">
+                    <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                    Play Trailer
+                  </span>
+                </button>
+              )}
+            </>
           )}
         </div>
 

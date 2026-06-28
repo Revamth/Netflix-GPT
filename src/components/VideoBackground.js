@@ -1,11 +1,15 @@
 import { useSelector } from "react-redux";
 import useMovieTrailer from "../hooks/useMovieTrailer";
 
-const VideoBackground = ({ id }) => {
+const VideoBackground = ({ id, paused = false }) => {
   const trailerVideo = useSelector((state) => state.movies?.trailerVideo);
   useMovieTrailer(id);
 
   if (!trailerVideo || !trailerVideo.key) return null;
+
+  // Unmount the iframe while paused (e.g. modal open) so it stops playing;
+  // it remounts instantly from Redux state when unpaused.
+  if (paused) return <div className="w-screen aspect-video bg-black" />;
 
   return (
     <div className="w-screen aspect-video">
