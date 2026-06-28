@@ -9,7 +9,8 @@ const SecondaryContainer = () => {
       <div className="relative -mt-[310px] left-0 w-full z-20 ">
         <div className="pb-12">
           <MovieList title={"Trending Now"} movies={movies?.trendingMovies} />
-          <MovieList title={"New Releases"} movies={movies?.upcomingMovies} />
+          {/* Now Playing was fetched but never displayed — surface it here. */}
+          <MovieList title={"Now Playing"} movies={movies?.nowPlayingMovies} />
           <MovieList
             title={"Popular on Netflix"}
             movies={movies?.popularMovies}
