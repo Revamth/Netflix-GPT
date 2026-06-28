@@ -59,7 +59,7 @@ const Header = () => {
   return (
     <div className="fixed top-0 left-0 right-0 px-4 py-3 bg-gradient-to-b from-black to-transparent z-50">
       <div className="flex justify-between items-center">
-        <img src={NETFLIX_LOGO} alt="Netflix Logo" className="w-24 md:w-32" />
+        <img src={NETFLIX_LOGO} alt="CineStream" className="w-32 md:w-40" />
         {user && (
           <div className="relative">
             <div className="flex items-center gap-4">

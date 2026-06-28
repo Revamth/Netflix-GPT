@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 80" width="360" height="80" role="img" aria-label="CineStream">
+  <defs>
+    <linearGradient id="cs-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f43f3f"/>
+      <stop offset="100%" stop-color="#b80710"/>
+    </linearGradient>
+  </defs>
+  <!-- Play-button mark -->
+  <g>
+    <rect x="2" y="14" width="52" height="52" rx="12" fill="url(#cs-grad)"/>
+    <path d="M24 28 L42 40 L24 52 Z" fill="#ffffff"/>
+  </g>
+  <!-- Wordmark -->
+  <text x="66" y="52"
+        font-family="'Bebas Neue', 'Arial Narrow', Impact, sans-serif"
+        font-size="44" font-weight="700" letter-spacing="1">
+    <tspan fill="#ffffff">CINE</tspan><tspan fill="#e50914">STREAM</tspan>
+  </text>
+</svg>
