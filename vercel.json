@@ -2,5 +2,8 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "npm run build",
   "outputDirectory": "build",
-  "rewrites": [{ "source": "/((?!api/).*)", "destination": "/index.html" }]
+  "rewrites": [
+    { "source": "/api/tmdb/(.*)", "destination": "/api/tmdb" },
+    { "source": "/((?!api/).*)", "destination": "/index.html" }
+  ]
 }

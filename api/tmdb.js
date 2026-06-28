@@ -9,25 +9,26 @@
 // into the public JS bundle. An incoming Authorization header is forwarded as a
 // fallback so the proxy still works before the server env var is configured.
 //
-// Mounted as a catch-all: a request to `/api/tmdb/movie/now_playing?page=1`
-// arrives here with req.query.path === ["movie", "now_playing"].
+// Routing: vercel.json rewrites `/api/tmdb/<anything>` to this flat function.
+// Vercel preserves the ORIGINAL path in req.url, so a request to
+// `/api/tmdb/movie/now_playing?page=1` arrives here with that same req.url; we
+// strip the `/api/tmdb` prefix to recover the TMDB path + query.
 
 const TMDB_BASE = "https://api.themoviedb.org/3";
 
 export default async function handler(req, res) {
-  const segments = req.query.path || [];
-  const path = Array.isArray(segments) ? segments.join("/") : segments;
+  // req.url still holds the original "/api/tmdb/movie/now_playing?page=1".
+  const rawUrl = req.url || "";
+  const [rawPath, rawQuery = ""] = rawUrl.split("?");
 
-  const url = new URL(`${TMDB_BASE}/${path}`);
+  // Strip the "/api/tmdb" prefix to get the TMDB path (e.g. "/movie/now_playing").
+  const tmdbPath = rawPath.replace(/^\/api\/tmdb/, "") || "/";
 
-  // Forward every query param except the `path` segments Vercel injects.
-  Object.entries(req.query).forEach(([key, value]) => {
-    if (key === "path") return;
-    if (Array.isArray(value)) {
-      value.forEach((v) => url.searchParams.append(key, v));
-    } else {
-      url.searchParams.set(key, value);
-    }
+  const url = new URL(`${TMDB_BASE}${tmdbPath}`);
+
+  // Forward the original query string verbatim.
+  new URLSearchParams(rawQuery).forEach((value, key) => {
+    url.searchParams.append(key, value);
   });
 
   const token = process.env.TMDB_TOKEN || process.env.REACT_APP_TMDB_TOKEN;
