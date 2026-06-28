@@ -1,7 +1,7 @@
 import { useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addTrailerVideo } from "../utils/movieSlice";
-import { BASE_URL, API_KEY } from "../utils/constants";
+import { API_OPTIONS, buildTmdbUrl } from "../utils/constants";
 
 const useMovieTrailer = (movieId) => {
   const dispatch = useDispatch();
@@ -10,8 +10,14 @@ const useMovieTrailer = (movieId) => {
   const getMovieVideos = useCallback(async () => {
     try {
       const res = await fetch(
-        `${BASE_URL}${movieId}/videos?api_key=${API_KEY}&language=en-US`
+        buildTmdbUrl(`/movie/${movieId}/videos`, { language: "en-US" }),
+        API_OPTIONS
       );
+
+      if (!res.ok) {
+        throw new Error(`TMDB API returned ${res.status}`);
+      }
+
       const data = await res.json();
 
       if (!data.results) {

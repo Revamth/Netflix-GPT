@@ -1,6 +1,6 @@
 import { useEffect, useCallback } from "react";
 import axios from "axios";
-import { API_OPTIONS } from "../utils/constants";
+import { API_OPTIONS, buildTmdbUrl } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { addNowPlayingMovie } from "../utils/movieSlice";
 
@@ -10,7 +10,7 @@ const useNowPlayingMovies = () => {
   const getNowPlayingMovies = useCallback(async () => {
     try {
       const response = await axios.get(
-        "https://api.themoviedb.org/3/movie/now_playing?page=1",
+        buildTmdbUrl("/movie/now_playing", { page: 1 }),
         API_OPTIONS
       );
       dispatch(addNowPlayingMovie(response.data.results));

@@ -1,6 +1,6 @@
 import { useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { API_OPTIONS } from "../utils/constants";
+import { API_OPTIONS, buildTmdbUrl } from "../utils/constants";
 import axios from "axios";
 import { addPopularMovies } from "../utils/movieSlice";
 
@@ -9,7 +9,7 @@ const usePopularMovies = () => {
   const fetchPopularMovies = useCallback(async () => {
     try {
       const response = await axios.get(
-        "https://api.themoviedb.org/3/movie/popular?&page=1",
+        buildTmdbUrl("/movie/popular", { page: 1 }),
         API_OPTIONS
       );
       dispatch(addPopularMovies(response.data.results));
