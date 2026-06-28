@@ -13,7 +13,7 @@ const MainContainer = () => {
   return (
     <div className="relative pt-16 w-full">
       <VideoBackground id={id} />
-      <VideoTitle title={original_title} overview={overview} />
+      <VideoTitle title={original_title} overview={overview} movie={mainMovie} />
     </div>
   );
 };

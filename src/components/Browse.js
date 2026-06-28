@@ -9,6 +9,7 @@ import SecondaryContainer from "./SecondaryContainer";
 import usePopularTVSeries from "../hooks/usePopularTVSeries";
 import useTopRatedTVSeries from "../hooks/useTopRatedTVSeries";
 import GPTSearchPage from "./GPTSearchPage";
+import MovieDetailModal from "./MovieDetailModal";
 import { useSelector } from "react-redux";
 
 const Browse = () => {
@@ -32,6 +33,8 @@ const Browse = () => {
           <SecondaryContainer />
         </>
       )}
+      {/* Detail modal — rendered once, opens for whichever card is clicked. */}
+      <MovieDetailModal />
     </div>
   );
 };

@@ -1,6 +1,13 @@
-const VideoTitle = ({ title, overview }) => {
+import { useDispatch } from "react-redux";
+import { setSelectedMovie } from "../utils/movieSlice";
+
+const VideoTitle = ({ title, overview, movie }) => {
+  const dispatch = useDispatch();
   const truncatedOverview =
     overview?.length > 200 ? overview.slice(0, 200) + "..." : overview;
+
+  // Both hero buttons open the detail modal for the featured movie.
+  const openModal = () => movie && dispatch(setSelectedMovie(movie));
 
   return (
     <div className="absolute bottom-[140px] left-0 w-full px-6 md:px-12 py-10 bg-gradient-to-t from-black to-transparent">
@@ -10,7 +17,10 @@ const VideoTitle = ({ title, overview }) => {
         </h1>
         <p className="text-lg text-white mb-6">{truncatedOverview}</p>
         <div className="flex gap-4">
-          <button className="bg-white hover:bg-opacity-80 text-black px-8 py-3 rounded font-semibold flex items-center justify-center transition-all duration-200">
+          <button
+            onClick={openModal}
+            className="bg-white hover:bg-opacity-80 text-black px-8 py-3 rounded font-semibold flex items-center justify-center transition-all duration-200"
+          >
             <svg
               className="w-6 h-6 mr-2"
               xmlns="http://www.w3.org/2000/svg"
@@ -21,7 +31,10 @@ const VideoTitle = ({ title, overview }) => {
             </svg>
             Play
           </button>
-          <button className="bg-gray-600 bg-opacity-70 hover:bg-opacity-50 text-white px-8 py-3 rounded font-semibold flex items-center justify-center transition-all duration-200">
+          <button
+            onClick={openModal}
+            className="bg-gray-600 bg-opacity-70 hover:bg-opacity-50 text-white px-8 py-3 rounded font-semibold flex items-center justify-center transition-all duration-200"
+          >
             <svg
               className="w-6 h-6 mr-2"
               xmlns="http://www.w3.org/2000/svg"

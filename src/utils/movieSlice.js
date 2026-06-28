@@ -11,6 +11,8 @@ const movieSlice = createSlice({
     trendingMovies: null,
     popularTVSeries: null,
     topRatedTVSeries: null,
+    // Movie currently shown in the detail modal (null = modal closed).
+    selectedMovie: null,
   },
   reducers: {
     addNowPlayingMovie: (state, action) => {
@@ -37,6 +39,10 @@ const movieSlice = createSlice({
     addTopRatedTVSeries: (state, action) => {
       state.topRatedTVSeries = action.payload;
     },
+    // Open the detail modal for a movie / close it (payload null).
+    setSelectedMovie: (state, action) => {
+      state.selectedMovie = action.payload;
+    },
   },
 });
 
@@ -49,6 +55,7 @@ export const {
   addTrendingMovies,
   addPopularTVSeries,
   addTopRatedTVSeries,
+  setSelectedMovie,
 } = movieSlice.actions;
 
 export default movieSlice.reducer;
