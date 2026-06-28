@@ -54,7 +54,8 @@ export const BASE_URL =
 export const TMDB_IMG =
   process.env.REACT_APP_TMDB_IMG_URL || "https://image.tmdb.org/t/p/w500";
 
-// Gemini now runs through a same-origin serverless proxy (see api/gemini.js)
-// so the API key never reaches the browser bundle. Override only for local dev.
-export const GEMINI_API_URL =
-  process.env.REACT_APP_GEMINI_API_URL || "/api/gemini";
+// AI movie search runs through a same-origin serverless proxy (api/ai-search.js,
+// backed by Groq) so the API key never reaches the browser bundle.
+// Override only for local dev.
+export const AI_SEARCH_URL =
+  process.env.REACT_APP_AI_SEARCH_URL || "/api/ai-search";

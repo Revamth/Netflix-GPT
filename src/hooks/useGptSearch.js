@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { API_OPTIONS, buildTmdbUrl, GEMINI_API_URL } from "../utils/constants";
+import { API_OPTIONS, buildTmdbUrl, AI_SEARCH_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { addGptResponse, toggleGptInputButton } from "../utils/gptSlice";
 
@@ -38,9 +38,9 @@ const useGptSearch = () => {
     dispatch(toggleGptInputButton());
 
     try {
-      // Call our server-side proxy instead of the Gemini SDK so the API key
-      // stays off the client bundle (see api/gemini.js).
-      const res = await fetch(GEMINI_API_URL, {
+      // Call our server-side proxy so the API key stays off the client bundle
+      // (see api/ai-search.js, backed by Groq).
+      const res = await fetch(AI_SEARCH_URL, {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ query: inputValue }),
