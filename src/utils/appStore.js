@@ -1,3 +1,4 @@
+// Redux store: combines the user, movies, and GPT-search slices.
 import { configureStore } from "@reduxjs/toolkit";
 import useReducer from "./userSlice";
 import moviesReducer from "./movieSlice";

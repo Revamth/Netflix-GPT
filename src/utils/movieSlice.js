@@ -1,3 +1,5 @@
+// Redux slice for all TMDB content rows, the hero trailer, and the movie
+// currently open in the detail modal.
 import { createSlice } from "@reduxjs/toolkit";
 
 const movieSlice = createSlice({

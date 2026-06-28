@@ -1,3 +1,4 @@
+// Loading skeleton shown while AI search results are being fetched.
 import React from "react";
 
 const Shimmer = () => {

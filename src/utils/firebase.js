@@ -1,8 +1,9 @@
-// Import the functions you need from the SDKs you need
+// Initializes the Firebase app and exports the Auth instance used across the app.
+// Note: this web config is public by design (safe to ship); access is controlled
+// by Firebase Auth + security rules, not by hiding these values.
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyAuQDfVzb8ix_IHtsTZmXoSfWbNauDhhTg",
   authDomain: "netflix-gpt-9f486.firebaseapp.com",

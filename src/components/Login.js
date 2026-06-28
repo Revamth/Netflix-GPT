@@ -1,3 +1,5 @@
+// Login / sign-up form. Validates input, then calls Firebase Auth; AppLayout's
+// listener handles the post-auth redirect.
 import { useState, useRef } from "react";
 import { checkValidity } from "../utils/validate";
 import {

@@ -1,3 +1,5 @@
+// Drives AI search: posts the query to the Groq proxy, then matches each
+// returned {title, year} against TMDB and stores the results in Redux.
 import { useState, useCallback } from "react";
 import { API_OPTIONS, buildTmdbUrl, AI_SEARCH_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";

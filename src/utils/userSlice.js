@@ -1,3 +1,4 @@
+// Redux slice holding the signed-in user ({uid, email, displayName}) or null.
 import { createSlice } from "@reduxjs/toolkit";
 
 const userSlice = createSlice({

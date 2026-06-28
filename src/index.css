@@ -1,3 +1,4 @@
+/* Global styles: Tailwind layers + a utility to hide scrollbars on movie rows. */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

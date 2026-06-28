@@ -1,3 +1,4 @@
+// AI search input form with quick-start suggestion chips and a loading state.
 import React from "react";
 import { useSelector } from "react-redux";
 import useGptSearch from "../hooks/useGptSearch";

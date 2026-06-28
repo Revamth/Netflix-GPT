@@ -1,3 +1,5 @@
+// Main authenticated page: runs all TMDB data hooks and toggles between the
+// normal browse view (hero + rows) and the GPT search view.
 import Header from "./Header";
 import useNowPlayingMovies from "../hooks/useNowPlayingMovies";
 import usePopularMovies from "../hooks/usePopularMovies";
@@ -33,7 +35,6 @@ const Browse = () => {
           <SecondaryContainer />
         </>
       )}
-      {/* Detail modal — rendered once, opens for whichever card is clicked. */}
       <MovieDetailModal />
     </div>
   );

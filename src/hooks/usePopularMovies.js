@@ -1,3 +1,4 @@
+// Fetches TMDB popular movies on mount and stores them in Redux.
 import { useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { API_OPTIONS, buildTmdbUrl } from "../utils/constants";

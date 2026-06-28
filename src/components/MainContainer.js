@@ -1,11 +1,10 @@
+// Hero section: features the first trending movie with its trailer + title overlay.
 import { useSelector } from "react-redux";
 import VideoTitle from "./VideoTitle";
 import VideoBackground from "./VideoBackground";
 
 const MainContainer = () => {
   const movies = useSelector((state) => state.movies?.trendingMovies);
-  // Pause the background trailer while the detail modal is open so two videos
-  // never play at once.
   const isModalOpen = useSelector((state) => !!state.movies?.selectedMovie);
 
   if (!movies || movies.length === 0) return null;

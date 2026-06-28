@@ -1,3 +1,4 @@
+// React entry point: mounts <App /> into the #root DOM node.
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';

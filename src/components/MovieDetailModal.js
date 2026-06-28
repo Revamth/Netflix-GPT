@@ -1,23 +1,20 @@
+// Detail modal for the selected movie: poster + metadata, with an opt-in
+// "Play Trailer" button. Closes on backdrop click, the × button, or Escape.
 import { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedMovie } from "../utils/movieSlice";
 import { API_OPTIONS, buildTmdbUrl, TMDB_IMG } from "../utils/constants";
 
-// Detail modal shown when a movie card is clicked. Fetches a trailer for the
-// selected title and renders it over a dimmed backdrop. Closes on backdrop
-// click, the × button, or the Escape key.
 const MovieDetailModal = () => {
   const dispatch = useDispatch();
   const movie = useSelector((state) => state.movies.selectedMovie);
   const [trailerKey, setTrailerKey] = useState(null);
-  // Trailer plays only after the user clicks "Play Trailer" — no autoplay.
   const [showTrailer, setShowTrailer] = useState(false);
 
   const closeModal = useCallback(() => {
     dispatch(setSelectedMovie(null));
   }, [dispatch]);
 
-  // movie items may be either /movie or /tv entries (GPT search returns movies).
   const isTV = movie && !movie.title && !!movie.name;
   const mediaType = isTV ? "tv" : "movie";
 

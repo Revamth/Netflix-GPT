@@ -1,3 +1,5 @@
+// Redux slice for AI search: view toggle, recommendations + TMDB results,
+// and loading/error state.
 import { createSlice } from "@reduxjs/toolkit";
 
 const gptSlice = createSlice({

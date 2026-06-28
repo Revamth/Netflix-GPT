@@ -1,3 +1,4 @@
+// A titled, horizontally-scrolling row of MovieCards. Renders nothing when empty.
 import MovieCard from "./MovieCard";
 
 const MovieList = ({ title, movies }) => {

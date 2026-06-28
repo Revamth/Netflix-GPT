@@ -1,3 +1,5 @@
+// Renders the hero's autoplaying, muted YouTube trailer. Unmounts when `paused`
+// (e.g. while the detail modal is open) so two videos never play at once.
 import { useSelector } from "react-redux";
 import useMovieTrailer from "../hooks/useMovieTrailer";
 
@@ -7,8 +9,6 @@ const VideoBackground = ({ id, paused = false }) => {
 
   if (!trailerVideo || !trailerVideo.key) return null;
 
-  // Unmount the iframe while paused (e.g. modal open) so it stops playing;
-  // it remounts instantly from Redux state when unpaused.
   if (paused) return <div className="w-screen aspect-video bg-black" />;
 
   return (

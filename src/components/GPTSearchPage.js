@@ -1,3 +1,4 @@
+// AI search view: the search bar plus its recommendation results.
 import React from "react";
 import GptMovieSuggestions from "./GptMovieSuggestions";
 import GptSearchBar from "./GptSearchBar";

@@ -1,3 +1,5 @@
+// Hero overlay: featured movie title, truncated overview, and Play / More Info
+// buttons that open the detail modal.
 import { useDispatch } from "react-redux";
 import { setSelectedMovie } from "../utils/movieSlice";
 

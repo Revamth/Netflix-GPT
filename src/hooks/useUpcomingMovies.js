@@ -1,3 +1,4 @@
+// Fetches TMDB upcoming movies on mount and stores them in Redux.
 import { useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { API_OPTIONS, buildTmdbUrl } from "../utils/constants";

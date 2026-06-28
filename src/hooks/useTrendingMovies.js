@@ -1,3 +1,4 @@
+// Fetches TMDB trending movies (day) on mount; also drives the hero. Stored in Redux.
 import { useCallback, useEffect } from "react";
 import axios from "axios";
 import { API_OPTIONS, buildTmdbUrl } from "../utils/constants";

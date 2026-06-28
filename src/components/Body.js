@@ -1,3 +1,4 @@
+// Defines the app's routes (/ and /browse) nested under AppLayout.
 import Login from "./Login";
 import Browse from "./Browse";
 import AppLayout from "./AppLayout";
@@ -7,7 +8,6 @@ import { RouterProvider } from "react-router-dom";
 const Body = () => {
   const appRouter = createBrowserRouter([
     {
-      // AppLayout hosts the single auth listener and drives redirects.
       element: <AppLayout />,
       children: [
         {

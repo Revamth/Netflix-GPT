@@ -1,3 +1,5 @@
+// Renders AI recommendation results: a shimmer while loading, an inline error,
+// or one row per suggested movie (with its reason and TMDB matches).
 import React from "react";
 import { useSelector } from "react-redux";
 import Shimmer from "../Pages/Shimmer";

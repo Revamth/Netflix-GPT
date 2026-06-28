@@ -1,3 +1,5 @@
+// Presentational top bar: logo, GPT-search toggle, user avatar + sign-out menu.
+// Auth state comes from Redux; the auth listener lives in AppLayout.
 import { useState } from "react";
 import { signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";

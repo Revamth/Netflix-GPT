@@ -1,3 +1,5 @@
+// Validates login/signup fields. Pass username as null to skip its check (sign-in).
+// Returns an error message string, or null when everything is valid.
 export const checkValidity = (email, password, username) => {
   const isEmailValid = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(
     email

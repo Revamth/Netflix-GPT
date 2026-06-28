@@ -1,3 +1,4 @@
+// CRA helper: forwards Core Web Vitals metrics to the callback you pass in.
 const reportWebVitals = onPerfEntry => {
   if (onPerfEntry && onPerfEntry instanceof Function) {
     import('web-vitals').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {

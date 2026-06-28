@@ -1,3 +1,4 @@
+// Fetches TMDB "now playing" movies on mount and stores them in Redux.
 import { useEffect, useCallback } from "react";
 import axios from "axios";
 import { API_OPTIONS, buildTmdbUrl } from "../utils/constants";

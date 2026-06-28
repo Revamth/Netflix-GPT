@@ -1,3 +1,4 @@
+// The stacked, horizontally-scrolling content rows below the hero.
 import { useSelector } from "react-redux";
 import MovieList from "./MovieList";
 

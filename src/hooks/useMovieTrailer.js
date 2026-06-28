@@ -1,3 +1,5 @@
+// Fetches a YouTube trailer for the given movieId and stores it in Redux;
+// refetches whenever movieId changes.
 import { useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { addTrailerVideo } from "../utils/movieSlice";
