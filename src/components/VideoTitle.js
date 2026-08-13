@@ -21,7 +21,7 @@ const VideoTitle = ({ title, overview, movie }) => {
         <div className="flex gap-4">
           <button
             onClick={openModal}
-            className="bg-white hover:bg-opacity-80 text-black px-8 py-3 rounded font-semibold flex items-center justify-center transition-all duration-200"
+            className="bg-white hover:bg-opacity-80 text-black px-8 py-3 rounded font-semibold flex items-center justify-center transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
           >
             <svg
               className="w-6 h-6 mr-2"
@@ -35,7 +35,7 @@ const VideoTitle = ({ title, overview, movie }) => {
           </button>
           <button
             onClick={openModal}
-            className="bg-gray-600 bg-opacity-70 hover:bg-opacity-50 text-white px-8 py-3 rounded font-semibold flex items-center justify-center transition-all duration-200"
+            className="bg-gray-600 bg-opacity-70 hover:bg-opacity-50 text-white px-8 py-3 rounded font-semibold flex items-center justify-center transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
           >
             <svg
               className="w-6 h-6 mr-2"
