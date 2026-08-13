@@ -12,8 +12,11 @@ const MovieCard = ({ movie }) => {
 
   return (
     <div
-      className="group relative flex-shrink-0 w-[180px] h-[260px] rounded-sm overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-110 hover:z-10"
+      role="button"
+      tabIndex={0}
       onClick={openModal}
+      onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && openModal()}
+      className="group relative flex-shrink-0 w-[180px] h-[260px] rounded-sm overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-110 hover:z-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:scale-110 focus-visible:z-10"
     >
       <img
         className="w-full h-full object-cover"
