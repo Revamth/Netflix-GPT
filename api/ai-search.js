@@ -16,7 +16,10 @@
 // show why each film was picked.
 
 const AI_BASE_URL = "https://api.groq.com/openai/v1/chat/completions";
-const AI_MODEL = process.env.GROQ_MODEL || "llama-3.3-70b-versatile";
+// .trim() for the same reason as the key below: a newline pasted into the env
+// var turns a valid model id into a 404 that reads like a decommissioned model.
+const AI_MODEL =
+  (process.env.GROQ_MODEL || "").trim() || "openai/gpt-oss-120b";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -76,10 +79,13 @@ export default async function handler(req, res) {
       } else if (aiRes.status === 429) {
         error = "AI search is rate limited right now. Try again in a minute.";
       } else if (aiRes.status === 404) {
-        error = `AI model "${AI_MODEL}" is not available. Set GROQ_MODEL to a currently supported model.`;
+        error = `AI model "${AI_MODEL}" was rejected by the provider. Set GROQ_MODEL to a model your key can access (list them with GET /openai/v1/models).`;
       }
 
-      return res.status(aiRes.status).json({ error });
+      // Always pass the provider's own wording through as `detail`. The friendly
+      // message above is a guess at the cause; `detail` is the ground truth, and
+      // without it a mapped status hides why the call actually failed.
+      return res.status(aiRes.status).json({ error, detail: providerMessage });
     }
 
     const text = data?.choices?.[0]?.message?.content || "{}";
