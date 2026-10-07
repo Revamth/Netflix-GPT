@@ -58,7 +58,20 @@ const useGptSearch = () => {
         body: JSON.stringify({ query }),
       });
 
-      const data = await res.json();
+      // The proxy only runs on Vercel. Under plain `npm start` this request
+      // gets the dev server's HTML 404 instead, so never assume JSON — a blind
+      // res.json() here fails with a cryptic "Unexpected token '<'".
+      const raw = await res.text();
+      let data;
+      try {
+        data = JSON.parse(raw);
+      } catch {
+        throw new Error(
+          res.status === 404
+            ? "AI search endpoint not found. The /api functions only run on Vercel — run `vercel dev` for local testing."
+            : `AI search returned an unexpected response (${res.status}).`
+        );
+      }
 
       if (!res.ok) {
         throw new Error(data?.error || `AI request failed (${res.status})`);

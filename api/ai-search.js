@@ -32,9 +32,14 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: "Missing 'query' in request body" });
   }
 
-  const apiKey = process.env.GROQ_KEY;
+  // .trim() guards against a trailing newline/space pasted into the Vercel env
+  // var — the provider rejects such a key with an opaque 401.
+  const apiKey = (process.env.GROQ_KEY || "").trim();
   if (!apiKey) {
-    return res.status(500).json({ error: "AI API key not configured" });
+    return res.status(500).json({
+      error:
+        "AI search is not configured: set GROQ_KEY in the Vercel project env vars.",
+    });
   }
 
   const prompt = `You are a movie recommendation engine. For the query: "${query}", suggest exactly 5 real movies. Respond with ONLY a JSON object of this shape, no extra text: {"movies":[{"title":"<exact movie title>","year":<release year number>,"reason":"<one short sentence why it fits>"}]}`;
@@ -57,11 +62,24 @@ export default async function handler(req, res) {
 
     const data = await aiRes.json();
 
-    // Surface the provider's own error (e.g. rate limit) to the client.
+    // Translate the provider's terse errors into something actionable — a bare
+    // "Invalid API Key" reaching the UI reads like a client bug, not a config one.
     if (!aiRes.ok) {
-      return res.status(aiRes.status).json({
-        error: data?.error?.message || "AI request failed",
-      });
+      const providerMessage =
+        data?.error?.message || `AI request failed (${aiRes.status})`;
+      console.error("AI provider error:", aiRes.status, providerMessage);
+
+      let error = providerMessage;
+      if (aiRes.status === 401 || aiRes.status === 403) {
+        error =
+          "AI search is unavailable: the server's GROQ_KEY is invalid or expired. Generate a new key at console.groq.com, update the Vercel env var, and redeploy.";
+      } else if (aiRes.status === 429) {
+        error = "AI search is rate limited right now. Try again in a minute.";
+      } else if (aiRes.status === 404) {
+        error = `AI model "${AI_MODEL}" is not available. Set GROQ_MODEL to a currently supported model.`;
+      }
+
+      return res.status(aiRes.status).json({ error });
     }
 
     const text = data?.choices?.[0]?.message?.content || "{}";
